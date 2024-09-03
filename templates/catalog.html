@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+
+{% block content %}
+<main>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <button class="item_id_button" onclick="window.location.href = '/item_info/{{ item.item_ID }}'">
+                        <i class="fa fa-eye"></i>{{ item.item_ID }}
+                    </button>
+                </td>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_type }}</td>
+                <td>
+                    {% if item.item_type == 'Reference' %}
+                    <button class="btn btn-request" onclick="alert('The Item is not for rent')">
+                        <i class="fas fa-lock"></i> Not For Rent
+                    </button>
+                    {% else %}
+                    {% if item.item_stock != 0 %}
+                    <button class="btn btn-add" onclick="window.location.href = '/checkout/{{item.item_ID}}'">
+                        <i class="fas fa-shopping-cart"></i> Checkout
+                    </button>
+                    {% else %}
+                    <button class="btn btn-request" onclick="alert('Requested Successfully')">
+                        <i class="fas fa-exclamation"></i> Request
+                    </button>
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No item found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

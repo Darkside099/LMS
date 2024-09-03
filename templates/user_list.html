@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block content %}
+<main>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Details</th>
+                <th>Services</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ user.user_ID }}</td>
+                <td>{{ user.user_name }}</td>
+                <td><button class="details-btn" onclick="window.location.href ='/user_info/{{ user.user_ID }}'"><i
+                            class="fas fa-eye"></i> View</button>
+                </td>
+                <td>
+                    <button class="details-btn" onclick="window.location.href ='/services/{{ user.user_ID }}'"><i
+                            class="fas fa-eye"></i>
+                        Services</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No users found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+{% endblock %}

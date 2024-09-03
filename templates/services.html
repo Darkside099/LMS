@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+{% block content %}
+<main>
+    <div class="service_heading">
+        <h2><i class="fas fa-user"></i>: {{ user.user_name }}</h2>
+        <h2><i class="fas fa-id-badge"></i>: {{ user.user_ID }}</h2>
+    </div>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Item ID's</th>
+                <th>Issued Dates</th>
+                <th>Return Dates</th>
+                <th>Fines</th>
+                <th>Renew</th>
+                <th>Return</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services_data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><button class="item_id_button" onclick="window.location.href = '/item_info/{{service.item_ID}}'"><i
+                            class="fa fa-eye"></i>{{ service.item_ID }}</button></td>
+                <td>{{ service.issued_date }}</td>
+                <td>{{ service.return_date }}</td>
+                <td>${{ service.fine|floatformat:2 }}</td>
+                <td>
+                    {% if service.renewed or item.item_request %}
+                    <button class="lock_btn" disabled><i class="fas fa-lock"></i></button>
+                    {% else %}
+                    <form method="post" class="action_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="service_id" value="{{ service.service_ID }}">
+                        <input type="hidden" name="action" value="renew">
+                        <button type="submit" class="renew_btn">Renew</button>
+                    </form>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" class="action_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="service_id" value="{{ service.service_ID }}">
+                        <input type="hidden" name="action" value="return">
+                        <button type="submit" class="return_btn">Return</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No services found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.action_form').on('submit', function (event) {
+            event.preventDefault();
+
+            var $form = $(this);
+            var url = window.location.href;
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: $form.serialize(),
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

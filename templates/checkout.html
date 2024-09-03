@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block content %}
+<main class="checkout-main">
+    <button id="close" onclick="window.location.href = '/catalog/book'"><i class="fa fa-close"></i></button>
+    <h2>Checkout</h2>
+    <form method="post" class="checkout-form">
+        {% csrf_token %}
+        <div class="input-container">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" name="user_id" placeholder="Enter User ID" required class="checkout-input">
+        </div>
+        <button type="submit" class="btn btn-checkout">
+            <i class="fas fa-shopping-cart"></i> Proceed to Checkout
+        </button>
+    </form>
+    {% if message %}
+    <p class="checkout-message">{{ message }}</p>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="{% static 'media/Icon.png' %}" type="image/x-icon">
+</head>
+
+<body>
+    <nav>
+        <div class="heading" onclick="window.location.href = '/'">
+            <i class="fas fa-book"></i>Library
+        </div>
+        <div class="nav-items">
+            <form method="post" class="search-container">
+                {% csrf_token %}
+                <input type="text" name="search_bar" placeholder="Search...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <ul>
+                <li class="dropdown">
+                    <a href="{% url 'catalog' 'book' %}"
+                        class="nav-item {% if request.path == '/catalog/book/' or request.path == '/catalog/audio/' or request.path == '/catalog/video/' or request.path == '/catalog/reference/' %}active{% endif %}">
+                        <i class="fas fa-book"></i> Catalog <i style="margin-left: 5px;" class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'catalog' 'book' %}">Books</a>
+                        <a href="{% url 'catalog' 'audio' %}">Audio</a>
+                        <a href="{% url 'catalog' 'video' %}">Video</a>
+                        <a href="{% url 'catalog' 'reference' %}">Reference Books/Magazines</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="register-container">
+                <button class="register-btn" onclick="window.location.href ='/register/'"><i
+                        class="fas fa-user-plus"></i> Register New User</button>
+            </div>
+        </div>
+    </nav>

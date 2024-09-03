@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container">
+    <div class="user-info">
+        <button onclick="window.location.href = '/'"><i class="fa fa-close"></i></button>
+        <h2><i class="fas fa-user-circle"></i> User Information</h2>
+        <p><i class="fas fa-id-badge"></i> <strong>ID : </strong> {{user.user_ID}}</p>
+        <p><i class="fas fa-user"></i> <strong>Name : </strong> {{user.user_name}}</p>
+        <p><i class="fas fa-home"></i> <strong>Address : </strong> {{user.user_address}}</p>
+        <p><i class="fas fa-phone"></i> <strong>Phone : </strong> (+91) {{user.user_phone}}</p>
+        <p><i class="fas fa-calendar-alt"></i> <strong>Date of Birth : </strong>{{user.user_dob}}</p>
+    </div>
+</div>
+{% endblock %}
